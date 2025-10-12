@@ -1,0 +1,37 @@
+FROM php:8.3-fpm
+
+ARG env_name
+
+# set timezone
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+# php-fpm設定ファイルのコピー
+COPY ./docker/php/phpfpm/conf.d/dev_www.conf /usr/local/etc/php-fpm.d/www.conf
+# COPY ./phpfpm/conf.d/www.conf /usr/local/etc/php-fpm.d/www.conf
+RUN chmod 644 /usr/local/etc/php-fpm.d/www.conf
+
+# php.iniのコピー
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+# COPY ./php.ini /usr/local/etc/php/php.ini
+RUN chmod 644 /usr/local/etc/php/php.ini
+RUN rm -f /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini-development
+
+# 必須パッケージのインストール
+RUN apt-get update && apt-get install -y \
+    git curl libpng-dev libonig-dev libxml2-dev zip unzip \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# コンテンツのコピー（これをすることでmyappに権限が付与される）
+# プロジェクトに合わせる必要あり
+ADD --chown=www-data:www-data ./project/contents/ /var/www/html/
+
+# アプリケーション配下をカレントディレクトリにする
+# プロジェクトに合わせる必要あり
+WORKDIR /var/www/html/myapp
+
+# Composerのバイナリを公式イメージからPHPにコピー
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# パッケージのインストールによって出る質問事項をスキップするために環境変数を設定
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_NO_INTERACTION 1

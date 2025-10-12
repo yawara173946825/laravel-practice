@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    volumes:
+      # プロジェクトに合わせる必要あり
+      - ./project/contents:/var/www/html
+    environment:
+      - CONTAINER_ENV=env
+      - DB_PASSWORD=root
+      # プロジェクトに合わせる必要あり
+      - APP_URL=http://localhost/unnamed_project
+    networks:
+      - unnamed-project
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/dockerfile
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql
+    environment:
+      - CONTAINER_ENV=dev
+    # プロジェクトに合わせる必要あり
+    volumes:
+      - ./project/contents:/var/www/html
+      - project_vendor:/var/www/html/myapp/vendor
+    networks:
+      - unnamed-project
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=laravel
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=general
+      - MYSQL_PASSWORD=general
+      - TZ=Asia/Tokyo
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - unnamed-project
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - unnamed-project
+
+# プロジェクトに合わせる必要あり
+volumes:
+  project_vendor:
+  mysql_data:
+
+networks:
+  unnamed-project:
