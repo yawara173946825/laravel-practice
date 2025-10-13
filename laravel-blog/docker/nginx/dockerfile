@@ -8,4 +8,4 @@ COPY ./docker/nginx/conf.d/dev.default.conf /etc/nginx/conf.d/default.conf
 COPY ./docker/nginx/fastcgi_params /etc/nginx/fastcgi_params
 COPY ./docker/nginx/mime.types /etc/nginx/mime.types
 # プロジェクトに合わせる必要あり
-COPY --chown=www-data:www-data ./project/contents/ /var/www/html/
+COPY --chown=www-data:www-data ./contents/ /var/www/html/

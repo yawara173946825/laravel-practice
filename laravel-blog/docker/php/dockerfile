@@ -23,11 +23,11 @@ RUN apt-get update && apt-get install -y \
 
 # コンテンツのコピー（これをすることでmyappに権限が付与される）
 # プロジェクトに合わせる必要あり
-ADD --chown=www-data:www-data ./project/contents/ /var/www/html/
+ADD --chown=www-data:www-data ./contents/ /var/www/html/
 
 # アプリケーション配下をカレントディレクトリにする
 # プロジェクトに合わせる必要あり
-WORKDIR /var/www/html/myapp
+WORKDIR /var/www/html/blog
 
 # Composerのバイナリを公式イメージからPHPにコピー
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

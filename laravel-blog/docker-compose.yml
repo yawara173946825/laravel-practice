@@ -1,41 +1,41 @@
 version: '3.8'
 
 services:
-  nginx:
+  laravel-blog-nginx:
     build:
       context: .
       dockerfile: ./docker/nginx/dockerfile
     ports:
       - "80:80"
     depends_on:
-      - php
+      - laravel-blog-php
     volumes:
       # プロジェクトに合わせる必要あり
-      - ./project/contents:/var/www/html
+      - ./contents:/var/www/html
     environment:
       - CONTAINER_ENV=env
       - DB_PASSWORD=root
       # プロジェクトに合わせる必要あり
-      - APP_URL=http://localhost/unnamed_project
+      - APP_URL=http://localhost/blog
     networks:
-      - unnamed-project
-  php:
+      - laravel-blog
+  laravel-blog-php:
     build:
       context: .
       dockerfile: ./docker/php/dockerfile
     ports:
       - "9000:9000"
     depends_on:
-      - mysql
+      - laravel-blog-mysql
     environment:
       - CONTAINER_ENV=dev
     # プロジェクトに合わせる必要あり
     volumes:
-      - ./project/contents:/var/www/html
-      - project_vendor:/var/www/html/myapp/vendor
+      - ./contents:/var/www/html
+      - laravel-blog-vendor:/var/www/html/blog/vendor
     networks:
-      - unnamed-project
-  mysql:
+      - laravel-blog
+  laravel-blog-mysql:
     image: mysql:8.0
     environment:
       - MYSQL_DATABASE=laravel
@@ -47,22 +47,22 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - laravel-blog-mysql-data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
-      - unnamed-project
-  redis:
+      - laravel-blog
+  laravel-blog-redis:
     image: redis:alpine
     container_name: redis
     ports:
       - "6379:6379"
     networks:
-      - unnamed-project
+      - laravel-blog
 
 # プロジェクトに合わせる必要あり
 volumes:
-  project_vendor:
-  mysql_data:
+  laravel-blog-vendor:
+  laravel-blog-mysql-data:
 
 networks:
-  unnamed-project:
+  laravel-blog:
