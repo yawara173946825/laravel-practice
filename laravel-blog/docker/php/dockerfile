@@ -19,7 +19,14 @@ RUN rm -f /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini-devel
 # 必須パッケージのインストール
 RUN apt-get update && apt-get install -y \
     git curl libpng-dev libonig-dev libxml2-dev zip unzip \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
+    # Node.js 20.x をインストール
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    # npm を最新化
+    && npm install -g npm@latest \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 # コンテンツのコピー（これをすることでmyappに権限が付与される）
 # プロジェクトに合わせる必要あり

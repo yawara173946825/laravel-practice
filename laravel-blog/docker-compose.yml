@@ -25,6 +25,7 @@ services:
       dockerfile: ./docker/php/dockerfile
     ports:
       - "9000:9000"
+      - "5173:5173"
     depends_on:
       - laravel-blog-mysql
     environment:
