@@ -1,13 +1,18 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import react from '@vitejs/plugin-react'; // 追加
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.jsx'], // app.js → app.jsx に変更
+            input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        react(), // Reactプラグインを有効化
     ],
+    server: {
+        host: '0.0.0.0',
+        port: 5173,
+        hmr: {
+            host: 'localhost',
+        },
+    },
 });
