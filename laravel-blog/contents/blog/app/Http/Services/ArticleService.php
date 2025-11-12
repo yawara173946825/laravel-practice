@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Article;
+use Illuminate\Database\Eloquent\Collection;
 
 class ArticleService
 {
@@ -11,6 +12,16 @@ class ArticleService
     public function __construct()
     {
         $this->article = new Article();
+    }
+
+    /**
+     * 記事全件取得
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<int, Article>
+     */
+    public function getPublishedArticles(): Collection
+    {
+        return $this->article->getPublishedArticles();
     }
 
     /**

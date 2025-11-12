@@ -21,8 +21,8 @@ class ArticleFactory extends Factory
             'user_id' => User::factory(), // ✅ 他モデルとリレーションを自動生成
             'title' => $this->faker->sentence(), // ✅ ランダムなタイトル
             'body' => $this->faker->paragraph(), // ✅ ランダムな本文
-            'created_by' => 1, // ✅ 仮の作成者ID（本来はauthユーザーなど）
-            'updated_by' => 1,
+            'created_by' => User::factory(), // ✅ 仮の作成者ID（本来はauthユーザーなど）
+            'updated_by' => User::factory(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

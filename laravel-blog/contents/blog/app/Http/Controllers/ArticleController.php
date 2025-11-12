@@ -15,6 +15,14 @@ class ArticleController extends Controller
         $this->article_service = new ArticleService();
     }
 
+    // 記事一覧
+    public function index()
+    {
+        $articles = $this->article_service->getPublishedArticles();
+
+        return view('article.index', compact('articles'));
+    }
+
     // 記事作成ページ
     public function create()
     {
