@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
     Route::get('/articles/index', [ArticleController::class, 'index'])->name('articles.index');
+    Route::get('/articles/show/{id}', [ArticleController::class, 'show'])->name('articles.show');
 });
 
 require __DIR__.'/auth.php';
