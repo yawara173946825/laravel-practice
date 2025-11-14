@@ -25,6 +25,17 @@ class ArticleService
     }
 
     /**
+     * 記事取得
+     *
+     * @param int $id
+     * @return \App\Models\Article
+     */
+    public function getById($id)
+    {
+        return $this->article->getById($id);
+    }
+
+    /**
      * 記事登録
      *
      * @param array $input

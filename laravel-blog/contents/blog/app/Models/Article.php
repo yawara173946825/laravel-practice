@@ -28,6 +28,17 @@ class Article extends Model
         return Article::all();
     }
 
+    /**
+     * IDから記事を取得
+     *
+     * @param int $id
+     * @return \App\Models\Article
+     */
+    public function getById($id): Article
+    {
+        return Article::find($id);
+    }
+
 
     /**
      * @param array $data
