@@ -36,6 +36,16 @@ class ArticleController extends Controller
 
         $this->article_service->articleCreate($input);
 
-        return view('dashboard');
+        return view('article.store');
+    }
+
+    public function show(String $id)
+    {
+        // 整数型にキャスト
+        $article_id = (int)$id;
+
+        $article = $this->article_service->getById($article_id);
+
+        return view('article.show', compact('article'));
     }
 }
