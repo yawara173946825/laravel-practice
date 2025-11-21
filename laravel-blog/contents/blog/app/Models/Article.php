@@ -48,4 +48,16 @@ class Article extends Model
     {
         return Article::create($data);
     }
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return \App\Models\Article
+     */
+    public function updateArticle(int $id, array $data): Article
+    {
+        $article = Article::findOrFail($id);
+        $article->update($data);
+        return $article;
+    }
 }

@@ -43,25 +43,54 @@ class ArticleService
      */
     public function articleCreate(array $input)
     {
-        $formatted_data = $this->formatCreateData($input);
+        $formatted_data = $this->formatCreateData($input, 'create');
         return $this->article->articleCreate($formatted_data);
     }
+
+    /**
+     * 記事編集
+     *
+     * @param int $id
+     * @param array input
+     * @return \App\Models\Article
+     */
+    public function updateArticle(int $id, array $input): Article
+    {
+        $formatted_data = $this->formatCreateData($input, 'update');
+        return $this->article->updateArticle($id, $formatted_data);
+    }
+
+
 
 
     /**
      * 記事登録データ作成
      *
      * @param array $input
+     * @param string $type
      * @return array
      */
-    private function formatCreateData(array $input)
+    private function formatCreateData(array $input, string $type): array
     {
-        return [
+        $result = [
             'title' => $input['title'],
             'body' => $input['body'],
             'user_id' => auth()->id(),
-            'created_by' => auth()->id(),
         ];
+
+        // 新規登録の場合
+        if ($type === 'create') {
+            $result['created_by'] = auth()->id();
+            return $result;
+        }
+
+        // 記事編集の場合
+        if ($type === 'update') {
+            $result['updated_by'] = auth()->id();
+            return $result;
+        }
+
+        return $result;
     }
 
 }
