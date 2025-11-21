@@ -39,6 +39,7 @@ class ArticleController extends Controller
         return view('article.store');
     }
 
+    // 記事詳細
     public function show(String $id)
     {
         // 整数型にキャスト
@@ -47,5 +48,38 @@ class ArticleController extends Controller
         $article = $this->article_service->getById($article_id);
 
         return view('article.show', compact('article'));
+    }
+
+    /**
+     * 記事編集ページ表示
+     * @param string $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit(string $id)
+    {
+        $article_id = (int)$id;
+        $article = $this->article_service->getById($article_id);
+
+        return view('article.edit', compact('article'));
+    }
+
+    /**
+     * 記事編集機能
+     *
+     * @param StoreArticleRequest $request
+     * @param string $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function update(StoreArticleRequest $request, String $id)
+    {
+        $input = $request->validated();
+
+        // 整数型にキャスト
+        $article_id = (int)$id;
+
+        // 記事更新
+        $article = $this->article_service->updateArticle($article_id, $input);
+
+        return redirect()->route('articles.show', $article_id);
     }
 }

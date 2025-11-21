@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
     Route::get('/articles/index', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/articles/show/{id}', [ArticleController::class, 'show'])->name('articles.show');
+    Route::get('/articles/edit/{id}', [ArticleController::class, 'edit'])->name('articles.edit');
+    Route::patch('/articles/update/{id}', [ArticleController::class, 'update'])->name('articles.update');
 });
 
 require __DIR__.'/auth.php';
