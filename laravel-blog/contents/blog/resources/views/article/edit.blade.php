@@ -39,7 +39,7 @@
               name="title"
               id="title"
               value="{{ old('title', $article->title) }}"
-              class="w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
+              class="w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-300"
               required
             >
           </div>
@@ -50,7 +50,7 @@
               name="body"
               id="body"
               rows="6"
-              class="w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
+              class="w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-300"
               required
             >{{ old('body', $article->body) }}</textarea>
           </div>

@@ -36,6 +36,17 @@ class ArticleService
     }
 
     /**
+     * ユーザから記事を取得
+     *
+     * @param int $user_id
+     * @return \Illuminate\Database\Eloquent\Collection<int, Article>
+     */
+    public function getByUserId(int $user_id): Collection
+    {
+        return $this->article->getByUserId($user_id);
+    }
+
+    /**
      * 記事登録
      *
      * @param array $input

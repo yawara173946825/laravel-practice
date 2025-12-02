@@ -35,8 +35,8 @@
 
                                     {{-- ボタン --}}
                                     <div class="text-right">
-                                        {{-- <a href="{{ route('articles.show', $article->id) }}" --}}
-                                           {{-- class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition"> --}}
+                                        <a href="{{ route('articles.show', $article->id) }}"
+                                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition">
                                             詳細を見る
                                         </a>
                                     </div>
