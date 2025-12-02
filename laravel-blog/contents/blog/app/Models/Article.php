@@ -10,11 +10,23 @@ class Article extends Model
 {
     use HasFactory;
 
+    /**
+     * ユーザテーブルとのリレーションを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 
     protected $fillable = [
         'title',
         'body',
         'user_id',
+        'created_by',
+        'updated_by',
     ];
 
     /**
@@ -26,6 +38,20 @@ class Article extends Model
     {
         // TODO: 公開記事フラグを持たせるので検索条件変える
         return Article::all();
+    }
+
+    /**
+     * ユーザを指定して記事を取得
+     *
+     * @param int $user_id
+     * @return \Illuminate\Database\Eloquent\Collection<int, Article>
+     */
+    public function getByUserId(int $user_id): Collection
+    {
+        $query = Article::query();
+        $query->where('user_id', $user_id);
+
+        return $query->get();
     }
 
     /**

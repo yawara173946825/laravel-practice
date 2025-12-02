@@ -13,6 +13,16 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * 記事テーブルとのリレーションを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class, 'id', 'user_id');
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

@@ -34,9 +34,9 @@ class ArticleController extends Controller
     {
         $input = $request->validated();
 
-        $this->article_service->articleCreate($input);
+        $article = $this->article_service->articleCreate($input);
 
-        return view('article.store');
+        return redirect()->route('articles.show', $article->id);
     }
 
     // 記事詳細
